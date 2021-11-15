@@ -1,0 +1,83 @@
+<html>
+<style>
+.container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: 100%;
+}
+.cell {
+border: 1px solid #000;
+padding: 10px;
+}
+</style>
+<body>
+<div id="app">
+最大值：<input v-model="max">
+<br>
+包含：
+<template v-for="i in 10">
+     <label>
+           <input type="checkbox" v-model="includes[i-1]"/> {{i-1}}
+     </label>
+</template>
+<br>
+数量： {{filterAll.length}}
+<br>
+<template v-if="Number(max)-Number(min) > 100000">
+     最大值不能差超过100000
+</template>
+<template v-else>
+
+<div class="container">
+<div class="cell" v-for="n in filterAll" :key="n"  v-if="show(n)"> {{ n }}</div>
+</div>
+
+</template>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+
+<script>
+new Vue({
+    el: '#app',
+    data: {
+         min: 0,
+         max: 9999,
+         includes: [0,0,0,0,0,0,0,0,0,0,],
+    },
+    computed: {
+         all(){
+             let arr = []
+             for(let i = Number(this.min); i <= Number(this.max); ++i) {
+                  arr.push(i)
+             }
+             return arr
+         },
+         filterAll(){
+             let arr = []
+             for(let n of this.all){
+                 let label = n.toString().padStart(this.max.toString().length, 0)
+                 if(this.show(label )) {
+                      arr.push(label )
+                 }
+             }
+             return arr
+         },
+    },
+    methods:{
+        show(label){
+            if(this.includes.filter(v => v).length == 0) return true
+            for(let i in this.includes) {
+                if(this.includes[i]) {
+                    if(!label.includes(i)) return false
+                }
+            }
+             return true
+        },
+    },
+})
+</script>
+</body>
+
+</html>
