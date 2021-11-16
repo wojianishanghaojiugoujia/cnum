@@ -15,18 +15,6 @@
             padding: 10px;
         }
 
-        .container {
-            display: flex;
-            flex-direction: row;
-            flex-wrap: wrap;
-            width: 100%;
-        }
-
-        .cell {
-            border: 1px solid #000;
-            padding: 10px;
-        }
-
         .hl {
             color: red;
         }
@@ -38,8 +26,19 @@
         }
 
         .cell-container {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            width: 100%;
             flex: 1;
             overflow-y: auto;
+        }
+
+        .cell {
+            border: 1px solid #000;
+            padding: 0 10px;
+            height: 40px;
+            line-height: 40px;
         }
     </style>
 
