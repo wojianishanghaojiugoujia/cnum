@@ -84,6 +84,14 @@
                 <input type="checkbox" v-model="dashun"> 大顺
             </label>
         </div>
+        <div class="checkbox">
+            <label>合值</label>
+            <template v-for="i in 37">
+                <label class="checkbox-inline">
+                    <input type="checkbox" v-model="sum[i-1]"> {{i-1}}
+                </label>
+            </template>
+        </div>
         <label>数量：{{ filterAll.length }}</label>
     </form>
     <div class="container cell-container">
@@ -118,6 +126,7 @@
             zasi: false,
             xiaoshun: false,
             dashun: false,
+            sum: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,],
         },
         computed: {
             all() {
@@ -184,6 +193,11 @@
                 }
                 if (this.dashun) {
                     if (sun.length < 4) return false
+                }
+
+                if (this.sum.filter(v => v).length > 0) {
+                    let sum = [...label].map(v => Number(v)).reduce((a, b) => a + b, 0)
+                    if (!this.sum[sum]) return false
                 }
 
                 return true
