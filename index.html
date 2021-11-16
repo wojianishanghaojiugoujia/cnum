@@ -54,6 +54,7 @@
                     <input type="checkbox" v-model="includes2[i-1]"> {{i-1}}
                 </label>
             </template>
+            <button class="btn btn-sm" @click.prevent="reset_includes2">重置</button>
         </div>
         <div class="checkbox">
             <label>只有勾选数组的组合</label>
@@ -62,6 +63,7 @@
                     <input type="checkbox" v-model="includes[i-1]"> {{i-1}}
                 </label>
             </template>
+            <button class="btn btn-sm" @click.prevent="reset_includes">重置</button>
         </div>
         <div class="checkbox">
             <label>其他组合</label>
@@ -83,6 +85,7 @@
             <label class="checkbox-inline">
                 <input type="checkbox" v-model="dashun"> 大顺
             </label>
+            <button class="btn btn-sm" @click.prevent="reset_other">重置</button>
         </div>
         <div class="checkbox">
             <label>合值</label>
@@ -91,6 +94,7 @@
                     <input type="checkbox" v-model="sum[i-1]"> {{i-1}}
                 </label>
             </template>
+            <button class="btn btn-sm" @click.prevent="reset_sum">重置</button>
         </div>
         <label>数量：{{ filterAll.length }}</label>
     </form>
@@ -148,6 +152,23 @@
             },
         },
         methods: {
+            reset_sum() {
+                this.sum = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,]
+            },
+            reset_other() {
+                this.dui = false
+                this.santiao = false
+                this.sitiao = false
+                this.zasi = false
+                this.xiaoshun = false
+                this.dashun = false
+            },
+            reset_includes() {
+                this.includes = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0,]
+            },
+            reset_includes2() {
+                this.includes2 = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0,]
+            },
             show(label) {
                 let check1 = this.includes.filter(v => v).length === 0
                 let check2 = this.includes2.filter(v => v).length === 0
