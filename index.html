@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <title>Number filter</title>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+
+    <!-- HTML5 shim 和 Respond.js 是为了让 IE8 支持 HTML5 元素和媒体查询（media queries）功能 -->
+    <!-- 警告：通过 file:// 协议（就是直接将 html 页面拖拽到浏览器中）访问页面时 Respond.js 不起作用 -->
+    <!--[if lt IE 9]>
+      <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+    <![endif]-->
+
+<style>
+.container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: 100%;
+}
+.cell {
+border: 1px solid #000;
+padding: 10px;
+}
+</style>
+
+  </head>
+  <body>
+    <div id="app">
+最大值：<input v-model="max">
+<br>
+
+含有勾选数组的组合：
+
+<template v-for="i in 10">
+     <label>
+           <input type="checkbox" v-model="includes2[i-1]"/> {{i-1}}
+     </label>
+</template>
+<br>
+
+只有勾选数组的组合：
+<template v-for="i in 10">
+     <label>
+           <input type="checkbox" v-model="includes[i-1]"/> {{i-1}}
+     </label>
+</template>
+<br>
+
+其他：
+<label>   <input type="checkbox" v-model="dui"/> 对子 </label>
+<label>   <input type="checkbox" v-model="santiao"/> 三条 </label>
+<label>   <input type="checkbox" v-model="sitiao"/> 四条 </label>
+<label>   <input type="checkbox" v-model="zasi"/> 杂四 </label>
+<br>
+数量： {{filterAll.length}}
+<br>
+<template v-if="Number(max)-Number(min) > 100000">
+     最大值不能差超过100000
+</template>
+<template v-else>
+
+<div class="container">
+<div class="cell" v-for="n in filterAll" :key="n"  v-if="show(n)"> {{ n }}</div>
+</div>
+
+</template>
+</div>
+
+    <!-- jQuery (Bootstrap 的所有 JavaScript 插件都依赖 jQuery，所以必须放在前边) -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js" integrity="sha384-nvAa0+6Qg9clwYCGGPpDQLVpLNn0fRaROjHqs13t4Ggj3Ez50XnGQqc/r8MhnRDZ" crossorigin="anonymous"></script>
+    <!-- 加载 Bootstrap 的所有 JavaScript 插件。你也可以根据需要只加载单个插件。 -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous"></script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+
+<script>
+new Vue({
+    el: '#app',
+    data: {
+         min: 0,
+         max: 9999,
+         includes: [0,0,0,0,0,0,0,0,0,0,],
+         includes2: [0,0,0,0,0,0,0,0,0,0,],
+        dui:  false,
+        santiao: false,
+        sitiao: false,
+        zasi: false,
+    },
+    computed: {
+         all(){
+             let arr = []
+             for(let i = Number(this.min); i <= Number(this.max); ++i) {
+                  arr.push(i)
+             }
+             return arr
+         },
+         filterAll(){
+             let arr = []
+             for(let n of this.all){
+                 let label = n.toString().padStart(this.max.toString().length, 0)
+                 if(this.show(label )) {
+                      arr.push(label )
+                 }
+             }
+             return arr
+         },
+    },
+    methods:{
+        show(label){
+            let check1 = this.includes.filter(v => v).length == 0
+            let check2 = this.includes2.filter(v => v).length == 0
+
+            if(!check1) {
+					for(let chr of label) {
+					    if(!this.includes[chr]) return false
+					}
+				}
+
+           if (!check2) {
+               let c2 = false
+            	for(let i in this.includes2) {
+                if(this.includes2[i]) {
+                    if(label.includes(i)) {
+								c2 = true
+								break
+							}
+                }
+            	}
+         		if(c2==false) return false
+				}
+				let c = this.count(label)
+				if (this.dui) {
+					if (c <2) return false
+				}
+
+				if (this.santiao) {
+					if (c <3) return false
+				}
+
+				if (this.sitiao) {
+					if (c <4) return false
+				}
+
+				if(this.zasi) {
+					if(c > 1) return false
+				}
+
+           
+             return true
+        },
+        count(label) {
+            let c = {}
+            for (let cc of label) {
+                if(c[cc] === undefined) {
+                    c[cc]=0
+                }
+                c[cc] ++
+            }
+            return Math.max(...Object.values(c))
+        }
+     },
+})
+</script>
+
+  </body>
+</html>
