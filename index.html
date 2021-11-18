@@ -85,6 +85,18 @@
             <label class="checkbox-inline">
                 <input type="checkbox" v-model="dashun"> 大顺
             </label>
+            <label class="checkbox-inline">
+                <input type="checkbox" v-model="allbig"> 全大
+            </label>
+            <label class="checkbox-inline">
+                <input type="checkbox" v-model="allsmall"> 全小
+            </label>
+            <label class="checkbox-inline">
+                <input type="checkbox" v-model="alldan"> 全单
+            </label>
+            <label class="checkbox-inline">
+                <input type="checkbox" v-model="allshuang"> 全双
+            </label>
             <button class="btn btn-sm" @click.prevent="reset_other">重置</button>
         </div>
         <div class="checkbox">
@@ -138,6 +150,10 @@
             zasi: false,
             xiaoshun: false,
             dashun: false,
+            allbig: false,
+            allsmall: false,
+            alldan: false,
+            allshuang: false,
             sum: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,],
         },
         computed: {
@@ -170,6 +186,10 @@
                 this.zasi = false
                 this.xiaoshun = false
                 this.dashun = false
+                this.allbig = false
+                this.allsmall = false
+                this.alldan = false
+                this.allshuang = false
             },
             reset_includes() {
                 this.includes = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0,]
@@ -226,6 +246,22 @@
                 if (this.sum.filter(v => v).length > 0) {
                     let sum = [...label].map(v => Number(v)).reduce((a, b) => a + b, 0)
                     if (!this.sum[sum]) return false
+                }
+
+                if (this.allbig) {
+                    if ([...label].some(c => Number(c) < 5)) return false
+                }
+
+                if (this.allsmall) {
+                    if ([...label].some(c => Number(c) > 4)) return false
+                }
+
+                if (this.alldan) {
+                    if ([...label].some(c => Number(c) % 2 === 0)) return false
+                }
+
+                if (this.allshuang) {
+                    if ([...label].some(c => Number(c) % 2 === 1)) return false
                 }
 
                 return true
