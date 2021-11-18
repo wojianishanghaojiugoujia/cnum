@@ -92,8 +92,26 @@
                 <input type="checkbox" v-model="allsmall"> 全小
             </label>
             <label class="checkbox-inline">
+                <input type="checkbox" v-model="onedan"> 1单
+            </label>
+            <label class="checkbox-inline">
+                <input type="checkbox" v-model="twodan"> 2单
+            </label>
+            <label class="checkbox-inline">
+                <input type="checkbox" v-model="threedan"> 3单
+            </label>
+            <label class="checkbox-inline">
                 <input type="checkbox" v-model="alldan"> 全单
             </label>
+<!--            <label class="checkbox-inline">-->
+<!--                <input type="checkbox" v-model="oneshuang"> 1双-->
+<!--            </label>-->
+<!--            <label class="checkbox-inline">-->
+<!--                <input type="checkbox" v-model="twoshuang"> 2双-->
+<!--            </label>-->
+<!--            <label class="checkbox-inline">-->
+<!--                <input type="checkbox" v-model="threeshuang"> 3双-->
+<!--            </label>-->
             <label class="checkbox-inline">
                 <input type="checkbox" v-model="allshuang"> 全双
             </label>
@@ -154,6 +172,12 @@
             allsmall: false,
             alldan: false,
             allshuang: false,
+            onedan: false,
+            twodan: false,
+            threedan: false,
+            oneshuang: false,
+            twoshuang: false,
+            threeshuang: false,
             sum: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,],
         },
         computed: {
@@ -190,6 +214,12 @@
                 this.allsmall = false
                 this.alldan = false
                 this.allshuang = false
+                this.onedan = false
+                this.twodan = false
+                this.threedan = false
+                this.oneshuang = false
+                this.twoshuang = false
+                this.threeshuang = false
             },
             reset_includes() {
                 this.includes = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0,]
@@ -256,12 +286,39 @@
                     if ([...label].some(c => Number(c) > 4)) return false
                 }
 
+                let dans = [...label].filter(c => Number(c) % 2 === 1)
+
+                if (this.onedan) {
+                    if (dans.length !== 1) return false
+                }
+
+                if (this.twodan) {
+                    if (dans.length !== 2) return false
+                }
+
+                if (this.threedan) {
+                    if (dans.length !== 3) return false
+                }
+
                 if (this.alldan) {
-                    if ([...label].some(c => Number(c) % 2 === 0)) return false
+                    if (dans.length !== label.length) return false
+                }
+
+                let ss = [...label].filter(c => Number(c) % 2 === 0)
+                if (this.oneshuang) {
+                    if (ss.length !== 1) return false
+                }
+
+                if (this.twoshuang) {
+                    if (ss.length !== 2) return false
+                }
+
+                if (this.threeshuang) {
+                    if (ss.length !== 3) return false
                 }
 
                 if (this.allshuang) {
-                    if ([...label].some(c => Number(c) % 2 === 1)) return false
+                    if (ss.length !== label.length) return false
                 }
 
                 return true
