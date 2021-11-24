@@ -171,6 +171,8 @@
     const dashunArr = ['0123', '1234', '2345', '3456', '4567', '5678', '6789', '7890',
         '3210', '4321', '5432', '6543', '7654', '8765', '9876', '0987'
     ]
+    const duiziArr = ['00', '11', '22', '33', '44', '55', '66', '77', '88', '99']
+    const santiaoArr = ['000', '111', '222', '333', '444', '555', '666', '777', '888', '999']
 
     const min = 0
     const max = 9999
@@ -310,16 +312,18 @@
                 }
 
                 let c
-                if (this.dui || this.santiao || this.sitiao || this.zasi) {
+                if (this.sitiao || this.zasi) {
                     c = this.count(label)
                 }
 
                 if (this.dui) {
-                    if (c < 2) return false
+                    // if (c < 2) return false
+                    if (duiziArr.every(xs => !label.match(new RegExp(xs)))) return false
                 }
 
                 if (this.santiao) {
-                    if (c < 3) return false
+                    // if (c < 3) return false
+                    if (santiaoArr.every(xs => !label.match(new RegExp(xs)))) return false
                 }
 
                 if (this.sitiao) {
