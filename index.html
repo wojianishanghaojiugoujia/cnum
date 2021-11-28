@@ -312,7 +312,7 @@
                 }
 
                 let c
-                if (this.sitiao || this.zasi) {
+                if (this.sitiao || this.zasi || this.santiao) {
                     c = this.count(label)
                 }
 
@@ -322,8 +322,8 @@
                 }
 
                 if (this.santiao) {
-                    // if (c < 3) return false
-                    if (santiaoArr.every(xs => !label.match(new RegExp(xs)))) return false
+                    if (c < 3) return false
+                    // if (santiaoArr.every(xs => !label.match(new RegExp(xs)))) return false
                 }
 
                 if (this.sitiao) {
