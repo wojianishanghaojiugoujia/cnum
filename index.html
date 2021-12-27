@@ -48,7 +48,7 @@
 <div id="app" class="container-fluid app-container">
     <form>
         <div class="checkbox">
-            <label>含有勾选数组的组合</label>
+            <label>Ticked</label>
             <template v-for="i in 10">
                 <label class="checkbox-inline">
                     <input type="checkbox" v-model="includes2[i-1]"> {{i - 1}}
@@ -57,7 +57,7 @@
             <button class="btn btn-sm" @click.prevent="reset_includes2">重置</button>
         </div>
         <div class="checkbox">
-            <label>只有勾选数组的组合</label>
+            <label>Tick only</label>
             <template v-for="i in 10">
                 <label class="checkbox-inline">
                     <input type="checkbox" v-model="includes[i-1]"> {{i - 1}}
@@ -66,7 +66,7 @@
             <button class="btn btn-sm" @click.prevent="reset_includes">重置</button>
         </div>
         <div class="checkbox">
-            <label>勾选数必配+自配</label>
+            <label>☑️roll+☑️only</label>
             <template v-for="i in 10">
                 <label class="checkbox-inline">
                     <input type="checkbox" v-model="includes3[i-1]"> {{i - 1}}
