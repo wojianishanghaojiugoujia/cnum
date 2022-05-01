@@ -89,6 +89,9 @@
                 <input type="checkbox" v-model="zasi"> 杂四
             </label>
             <label class="checkbox-inline">
+                <input type="checkbox" v-model="erlian"> 二连
+            </label>
+            <label class="checkbox-inline">
                 <input type="checkbox" v-model="xiaoshun"> 小顺
             </label>
             <label class="checkbox-inline">
@@ -208,6 +211,7 @@
             twoshuang: false,
             threeshuang: false,
             sum: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,],
+            erlian: false,
         },
         computed: {
             all () {
@@ -395,6 +399,12 @@
 
                 if (this.allshuang) {
                     if (ss.length !== label.length) return false
+                }
+
+                if(this.erlian) {
+                    let del = [];
+                    [...label].map(Number).reduce((a, b) => {del.push(a-b);return b});
+                    if(!del.includes(1) && !del.includes(-1) && !del.includes(9) && !del.includes(-9)) return false
                 }
 
                 return true
