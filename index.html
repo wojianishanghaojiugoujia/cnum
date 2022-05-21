@@ -7,8 +7,7 @@
     <title>4位数组合</title>
 
     <!-- Bootstrap -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
-          integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
     <style>
         body, html {
             height: 100%;
@@ -78,6 +77,9 @@
             <label>其他组合</label>
             <label class="checkbox-inline">
                 <input type="checkbox" v-model="dui"> 对子
+            </label>
+            <label class="checkbox-inline">
+                <input type="checkbox" v-model="liangtiao"> 两条
             </label>
             <label class="checkbox-inline">
                 <input type="checkbox" v-model="santiao"> 三条
@@ -156,15 +158,10 @@
 </div>
 
 <!-- jQuery (Bootstrap 的所有 JavaScript 插件都依赖 jQuery，所以必须放在前边) -->
-<script src="https://cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"
-        integrity="sha384-nvAa0+6Qg9clwYCGGPpDQLVpLNn0fRaROjHqs13t4Ggj3Ez50XnGQqc/r8MhnRDZ"
-        crossorigin="anonymous"></script>
+<script src="js/jquery.min.js"></script>
 <!-- 加载 Bootstrap 的所有 JavaScript 插件。你也可以根据需要只加载单个插件。 -->
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"
-        integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd"
-        crossorigin="anonymous"></script>
-
-<script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/vue.min.js"></script>
 
 <script>
 
@@ -175,7 +172,6 @@
         '3210', '4321', '5432', '6543', '7654', '8765', '9876', '0987'
     ]
     const duiziArr = ['00', '11', '22', '33', '44', '55', '66', '77', '88', '99']
-    const santiaoArr = ['000', '111', '222', '333', '444', '555', '666', '777', '888', '999']
 
     const min = 0
     const max = 9999
@@ -195,6 +191,7 @@
             includes2: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0,],
             includes3: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0,],
             dui: false,
+            liangtiao: false,
             santiao: false,
             sitiao: false,
             zasi: false,
@@ -250,6 +247,7 @@
             },
             reset_other () {
                 this.dui = false
+                this.liangtiao = false
                 this.santiao = false
                 this.sitiao = false
                 this.zasi = false
@@ -316,18 +314,20 @@
                 }
 
                 let c
-                if (this.sitiao || this.zasi || this.santiao) {
+                if (this.sitiao || this.zasi || this.santiao || this.liangtiao) {
                     c = this.count(label)
                 }
 
                 if (this.dui) {
-                    // if (c < 2) return false
                     if (duiziArr.every(xs => !label.match(new RegExp(xs)))) return false
+                }
+
+                if(this.liangtiao) {
+                    if(c < 2) return false
                 }
 
                 if (this.santiao) {
                     if (c < 3) return false
-                    // if (santiaoArr.every(xs => !label.match(new RegExp(xs)))) return false
                 }
 
                 if (this.sitiao) {
