@@ -100,6 +100,9 @@
                 <input type="checkbox" v-model="dashun"> 大顺
             </label>
             <label class="checkbox-inline">
+                <input type="checkbox" v-model="sizashun"> 四杂顺
+            </label>
+            <label class="checkbox-inline">
                 <input type="checkbox" v-model="allbig"> 全大
             </label>
             <label class="checkbox-inline">
@@ -173,6 +176,11 @@
     ]
     const duiziArr = ['00', '11', '22', '33', '44', '55', '66', '77', '88', '99']
 
+    const sizashunArr = [
+        '0123', '1234', '2345', '3456', '4567', '5678', '6789', '7890', '8901', 
+        '9012',
+    ]
+
     const min = 0
     const max = 9999
     const arr = []
@@ -209,6 +217,7 @@
             threeshuang: false,
             sum: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,],
             erlian: false,
+            sizashun: false,
         },
         computed: {
             all () {
@@ -263,6 +272,7 @@
                 this.oneshuang = false
                 this.twoshuang = false
                 this.threeshuang = false
+                this.sizashun = false
             },
             reset_includes () {
                 this.includes = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0,]
@@ -405,6 +415,10 @@
                     let del = [];
                     [...label].map(Number).reduce((a, b) => {del.push(a-b);return b});
                     if(!del.includes(1) && !del.includes(-1) && !del.includes(9) && !del.includes(-9)) return false
+                }
+
+                if(this.sizashun) {
+                    if(sizashunArr.includes([...label].sort().join('')) === false) return false
                 }
 
                 return true
