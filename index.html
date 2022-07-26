@@ -100,6 +100,9 @@
                 <input type="checkbox" v-model="dashun"> 大顺
             </label>
             <label class="checkbox-inline">
+                <input type="checkbox" v-model="sanzashun"> 三杂顺
+            </label>
+            <label class="checkbox-inline">
                 <input type="checkbox" v-model="sizashun"> 四杂顺
             </label>
             <label class="checkbox-inline">
@@ -181,6 +184,11 @@
         '0129',
     ]
 
+    const sanzashunArr = [
+        /\d?0\d?1\d?2\d?/, /\d?1\d?2\d?3\d?/, /\d?2\d?3\d?4\d?/, /\d?3\d?4\d?5\d?/, /\d?4\d?5\d?6\d?/, /\d?5\d?6\d?7\d?/, /\d?6\d?7\d?8\d?/, /\d?7\d?8\d?9\d?/ , /\d?0\d?8\d?9\d?/,
+        /\d?0\d?1\d?9\d?/,
+    ]
+
     const min = 0
     const max = 9999
     const arr = []
@@ -218,6 +226,7 @@
             sum: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,],
             erlian: false,
             sizashun: false,
+            sanzashun: false,
         },
         computed: {
             all () {
@@ -273,6 +282,7 @@
                 this.twoshuang = false
                 this.threeshuang = false
                 this.sizashun = false
+                this.sanzashun = false
             },
             reset_includes () {
                 this.includes = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0,]
@@ -419,6 +429,11 @@
 
                 if(this.sizashun) {
                     if(sizashunArr.includes([...label].sort().join('')) === false) return false
+                }
+                
+                if(this.sanzashun) {
+                    let labelSort = [...label].sort().join('')
+                    if(sanzashunArr.every(sanzashunReg => !sanzashunReg.test(labelSort))) return false
                 }
 
                 return true
